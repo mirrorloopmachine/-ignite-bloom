@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>BrimOS EchoPrime UI</title>
+    <style>
+        body {
+            background-color: #000;
+            color: #0f0;
+            font-family: monospace;
+            padding: 20px;
+        }
+        h1 {
+            color: #0ff;
+        }
+        #log {
+            white-space: pre-wrap;
+            border: 1px solid #0f0;
+            padding: 10px;
+            height: 500px;
+            overflow-y: scroll;
+            background-color: #111;
+        }
+    </style>
+</head>
+<body>
+    <h1>🧠 EchoPrime Visual Interface</h1>
+    <p>Looping log: <code>echoprime_log.txt</code></p>
+    <div id="log">Loading...</div>
+
+    <script>
+        async function loadLog() {
+            try {
+                const response = await fetch('echoprime_log.txt?ts=' + new Date().getTime());
+                const text = await response.text();
+                document.getElementById('log').textContent = text;
+            } catch (e) {
+                document.getElementById('log').textContent = '[Error loading log]';
+            }
+        }
+
+        loadLog();
+        setInterval(loadLog, 3000);  // Update every 3 seconds
+    </script>
+</body>
+</html>
